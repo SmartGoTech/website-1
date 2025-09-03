@@ -307,7 +307,8 @@
       window.addEventListener("pointerup", (e) => {
         if (!isDragging) return;
         isDragging = false;
-        // If velocity is already tiny, start snapping immediately; otherwise animate inertia then snap (handled in RAF)
+        // If velocity is already tiny, start snapping immediately; 
+        // otherwise animate inertia then snap (handled in RAF)
         if (Math.abs(velocity) < VELOCITY_SNAP_THRESHOLD) {
           snapTarget = Math.round(rotation / STEP_DEG) * STEP_DEG;
           isSnapping = true;
