@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Carousel</title>
+    <style>
+      @import url("https://fonts.cdnfonts.com/css/ica-rubrik-black");
+      @import url("https://fonts.cdnfonts.com/css/poppins");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+      }
+
+      body {
+        background-color: #d2d2d2;
+        background-image: repeating-linear-gradient(
+            to right,
+            transparent 0 100px,
+            #25283b22 100px 101px
+          ),
+          repeating-linear-gradient(
+            to bottom,
+            transparent 0 100px,
+            #25283b22 100px 101px
+          );
+      }
+      body::before {
+        position: absolute;
+        width: min(1400px, 90vw);
+        top: 10%;
+        left: 50%;
+        height: 90%;
+        transform: translateX(-50%);
+        content: "";
+        background-image: url(images/bg.png);
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: top center;
+        pointer-events: none;
+      }
+
+      .banner {
+        width: 100%;
+        height: 100vh;
+        text-align: center;
+        overflow: hidden;
+        position: relative;
+      }
+      .banner .slider {
+        position: absolute;
+        width: 200px;
+        height: 250px;
+        top: 10%;
+        left: calc(50% - 100px);
+        transform-style: preserve-3d;
+        transform: perspective(1000px) rotateX(-16deg);
+        z-index: 2;
+      }
+      .banner .slider .item {
+        position: absolute;
+        inset: 0 0 0 0;
+        transform: rotateY(
+            calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)
+          )
+          translateZ(550px);
+      }
+      .banner .slider .item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+        border-radius: 10px;
+      }
+      .banner .content {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(1400px, 100vw);
+        height: max-content;
+        padding-bottom: 100px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1;
+      }
+      .banner .content h1 {
+        font-family: "ICA Rubrik";
+        font-size: 16em;
+        line-height: 1em;
+        color: #25283b;
+        position: relative;
+      }
+      .banner .content h1::after {
+        position: absolute;
+        inset: 0 0 0 0;
+        content: attr(data-content);
+        z-index: 2;
+        -webkit-text-stroke: 2px #d2d2d2;
+        color: transparent;
+      }
+      .banner .content .author {
+        font-family: Poppins;
+        text-align: right;
+        max-width: 200px;
+      }
+      .banner .content h2 {
+        font-size: 3em;
+      }
+      .banner .content .model {
+        background-image: url(images/model.png);
+        width: 100%;
+        height: 75vh;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background-size: auto 130%;
+        background-repeat: no-repeat;
+        background-position: top center;
+        z-index: 1;
+      }
+
+      @media screen and (max-width: 1023px) {
+        .banner .slider {
+          width: 160px;
+          height: 200px;
+          left: calc(50% - 80px);
+        }
+        .banner .slider .item {
+          transform: rotateY(
+              calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)
+            )
+            translateZ(300px);
+        }
+        .banner .content h1 {
+          text-align: center;
+          width: 100%;
+          text-shadow: 0 10px 20px #000;
+          font-size: 7em;
+        }
+        .banner .content .author {
+          color: #fff;
+          padding: 20px;
+          text-shadow: 0 10px 20px #000;
+          z-index: 2;
+          max-width: unset;
+          width: 100%;
+          text-align: center;
+          padding: 0 30px;
+        }
+      }
+      @media screen and (max-width: 767px) {
+        .banner .slider {
+          width: 100px;
+          height: 150px;
+          left: calc(50% - 50px);
+        }
+        .banner .slider .item {
+          transform: rotateY(
+              calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)
+            )
+            translateZ(180px);
+        }
+        .banner .content h1 {
+          font-size: 5em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="banner">
+      <div class="slider" id="slider" style="--quantity: 10">
+        <div class="item" style="--position: 1">
+          <img src="images/dragon_1.jpg" />
+        </div>
+        <div class="item" style="--position: 2">
+          <img src="images/dragon_2.jpg" />
+        </div>
+        <div class="item" style="--position: 3">
+          <img src="images/dragon_3.jpg" />
+        </div>
+        <div class="item" style="--position: 4">
+          <img src="images/dragon_4.jpg" />
+        </div>
+        <div class="item" style="--position: 5">
+          <img src="images/dragon_5.jpg" />
+        </div>
+        <div class="item" style="--position: 6">
+          <img src="images/dragon_6.jpg" />
+        </div>
+        <div class="item" style="--position: 7">
+          <img src="images/dragon_7.jpg" />
+        </div>
+        <div class="item" style="--position: 8">
+          <img src="images/dragon_8.jpg" />
+        </div>
+        <div class="item" style="--position: 9">
+          <img src="images/dragon_9.jpg" />
+        </div>
+        <div class="item" style="--position: 10">
+          <img src="images/dragon_10.jpg" />
+        </div>
+      </div>
+      <div class="content">
+        <h1 data-content="CSS ONLY">CSS ONLY</h1>
+        <div class="author">
+          <h2>LUN DEV</h2>
+          <p><b>Web Design</b></p>
+          <p>Subscribe to the channel to watch many interesting videos</p>
+        </div>
+        <div class="model"></div>
+      </div>
+    </div>
+
+    <script>
+      const slider = document.getElementById("slider");
+      slider.style.animation = "none"; // Ensure CSS animation doesn't fight JS control
+
+      // Tunables
+      const ITEMS =
+        parseInt(getComputedStyle(slider).getPropertyValue("--quantity")) || 10;
+      const STEP_DEG = 360 / ITEMS; // angle per item (36° for 10 items)
+      const DRAG_SENSITIVITY = 0.35; // pixels -> degrees
+      const FRICTION = 0.96; // inertia decay
+      const SNAP_EASING = 0.16; // snap LERP amount per frame
+      const SNAP_EPSILON = 0.4; // when to consider snap finished
+      const VELOCITY_SNAP_THRESHOLD = 0.12; // when low velocity triggers snap
+
+      // State
+      let rotation = 0; // continuous degrees (<360 / >360)
+      let velocity = 0;
+      let isDragging = false;
+      let lastX = 0;
+      let isSnapping = false;
+      let snapTarget = null;
+
+      function applyTransform() {
+        slider.style.transform = `perspective(1000px) rotateX(-16deg) rotateY(${rotation}deg)`;
+      }
+
+      // Main animation loop (single RAF)
+      function animate() {
+        if (isDragging) {
+          // while dragging, rotation & velocity are updated in pointermove handler
+          // don't apply friction here (user directly controls)
+        } else if (isSnapping && snapTarget !== null) {
+          // snap phase: ease towards snapTarget
+          const diff = snapTarget - rotation;
+          rotation += diff * SNAP_EASING;
+          velocity = 0;
+          if (Math.abs(diff) < SNAP_EPSILON) {
+            rotation = snapTarget;
+            isSnapping = false;
+            snapTarget = null;
+            velocity = 0; // TODO: or set small base spin if you want auto-spin to resume [FAILED]
+          }
+        } else {
+          // free spinning + momentum
+          rotation += velocity;
+          velocity *= FRICTION;
+
+          // If inertia decays below threshold, start snapping automatically
+          if (Math.abs(velocity) < VELOCITY_SNAP_THRESHOLD && !isSnapping) {
+            snapTarget = Math.round(rotation / STEP_DEG) * STEP_DEG;
+            isSnapping = true;
+          }
+        }
+
+        applyTransform();
+        requestAnimationFrame(animate);
+      }
+
+      function cancelSnapping() {
+        isSnapping = false;
+        snapTarget = null;
+      }
+
+      /* 
+      Pointer handlers (pointer events unify mouse/touch)
+      Important: when dragging starts we cancel any active snap so user immediately controls it. 
+      */
+      slider.addEventListener("pointerdown", (e) => {
+        isDragging = true;
+        lastX = e.clientX;
+        cancelSnapping();
+        velocity = 0; // freeze inertia while dragging
+        if (slider.setPointerCapture) slider.setPointerCapture(e.pointerId);
+      });
+
+      window.addEventListener("pointermove", (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - lastX;
+        lastX = e.clientX;
+        const dDeg = dx * DRAG_SENSITIVITY;
+        rotation += dDeg;
+        velocity = dDeg; // use last drag delta as post-release velocity
+      });
+
+      window.addEventListener("pointerup", (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        // If velocity is already tiny, start snapping immediately; otherwise animate inertia then snap (handled in RAF)
+        if (Math.abs(velocity) < VELOCITY_SNAP_THRESHOLD) {
+          snapTarget = Math.round(rotation / STEP_DEG) * STEP_DEG;
+          isSnapping = true;
+        }
+        if (slider.releasePointerCapture)
+          slider.releasePointerCapture(e.pointerId);
+      });
+
+      // Start the loop
+      requestAnimationFrame(animate);
+    </script>
+  </body>
+</html>
